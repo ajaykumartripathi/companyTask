@@ -1,0 +1,144 @@
+<section>
+    <div class="container">
+      <h1 class="text-center mt-2">User Task</h1>
+      <div class="d-flex justify-content-end mt-2">
+        <!-- Button trigger -->
+        <button type="button" class="btn adduser mt-2" data-bs-toggle="modal" data-bs-target="#example"
+        (click)="onUserAdd()">
+          Add User
+        </button>
+  
+        <!-- Modal -->
+        <div class="modal fade" id="example" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  
+                  <input type="text" placeholder="Enter User Name" name="username" formControlName="username">
+                  <!-- <button type="button" class="btn btn-primary" (click)="onSubmit()">Save changes</button> -->
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="onSubmit()" data-bs-dismiss="modal"
+                  aria-label="Close">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+  
+      <div cdkDropListGroup class="row mt-4">
+        <ng-container *ngFor="let user of userList; let i=index">
+          <div class="col-auto box ms-2" 
+          cdkDropList
+        [cdkDropListData]=user.taskList
+        (cdkDropListDropped)="drop($event)">
+        <div class="d-flex justify-content-between ">
+          <span class="userinfo" data-bs-toggle="modal" data-bs-target="#example"(click)="OnuserEdit(user.id)">{{user.name}}</span>
+          <!-- <i class="fa fa-delete-left" ></i> -->
+          <!-- <i class="fa fa-minus" aria-hidden="true"></i> -->
+          
+          <!-- Delete Modal -->
+          <!-- Button trigger modal -->
+  <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal"> -->
+    <i class="fa fa-minus" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#deleteModal"></i>
+  <!-- </button> -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h5>Sure! Are you want to Delete !</h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+          <button type="button" class="btn btn-primary" (click)="onDeleteUser(i)" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+        </div>
+            <hr class="rowLine">
+            <div class="d-flex flex-column justify-content-center">
+            <span class="taskList" *ngFor="let task of user.taskList" data-bs-toggle="modal" data-bs-target="#exampleModal" 
+            cdkDrag (click)="OnTaskEdit(user.id,task.id)">{{task.taskname}}</span>
+            <!-- Edit Task Modal -->
+              <!-- Modal -->
+              <!-- Button trigger modal -->
+              <i class="fa fa-plus-circle mb-2" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="OnTaskGetId(user.id)"></i>
+              <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="OnTaskGetId(user.id)">
+                Add Task
+              </button> -->
+             
+              <!-- Add task Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form [formGroup]="taskForm" (ngSubmit)="onAddTask()">
+  
+                        <input type="text" placeholder="Enter Task Name" name="taskName" formControlName="taskName">
+                        <!-- <button type="button" class="btn btn-primary" (click)="onSubmit()">Save changes</button> -->
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary" (click)="onAddTask()" data-bs-dismiss="modal">Save</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- end card div tag -->
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </section>
+  
+  
+  
+  <!-- <div cdkDropListGroup>
+    <div class="example-container">
+      <h2>To do</h2>
+  
+      <div
+        cdkDropList
+        [cdkDropListData]="todo"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
+      </div>
+    </div>
+  
+    <div class="example-container">
+      <h2>Done</h2>
+  
+      <div
+        cdkDropList
+        [cdkDropListData]="done"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
+      </div>
+    </div>
+  </div> -->
+  
